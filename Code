@@ -1,0 +1,64 @@
+// Define sensor and LED pins
+const int leftIRSensor = 2; // Pin for left IR sensor
+const int rightIRSensor = 3; // Pin for right IR sensor
+const int backLiSensor1 = 4; // Pin for first back Li sensor
+const int backLiSensor2 = 5; // Pin for second back Li sensor
+
+const int leftLED = 6; // Pin for left LED
+const int rightLED = 7; // Pin for right LED
+
+void setup() {
+  // Set sensor pins as input
+  pinMode(leftIRSensor, INPUT);
+  pinMode(rightIRSensor, INPUT);
+  pinMode(backLiSensor1, INPUT);
+  pinMode(backLiSensor2, INPUT);
+  
+  // Set LED pins as output
+  pinMode(leftLED, OUTPUT);
+  pinMode(rightLED, OUTPUT);
+  
+  // Start with LEDs off
+  digitalWrite(leftLED, LOW);
+  digitalWrite(rightLED, LOW);
+  
+  Serial.begin(9600); // For debugging
+}
+
+void loop() {
+  // Read the IR sensors
+  int leftIRValue = digitalRead(leftIRSensor);
+  int rightIRValue = digitalRead(rightIRSensor);
+  
+  // Read the back Li sensors
+  int backLiValue1 = digitalRead(backLiSensor1);
+  int backLiValue2 = digitalRead(backLiSensor2);
+  
+  // Control left LED based on the left IR sensor
+  if (leftIRValue == HIGH) {
+    digitalWrite(leftLED, HIGH); // Turn on left LED
+  } else {
+    digitalWrite(leftLED, LOW); // Turn off left LED
+  }
+
+  // Control right LED based on the right IR sensor
+  if (rightIRValue == HIGH) {
+    digitalWrite(rightLED, HIGH); // Turn on right LED
+  } else {
+    digitalWrite(rightLED, LOW); // Turn off right LED
+  }
+
+  // (Optional) Debugging information
+  Serial.print("Left IR: ");
+  Serial.print(leftIRValue);
+  Serial.print(" | Right IR: ");
+  Serial.print(rightIRValue);
+  Serial.print(" | Back Li Sensor 1: ");
+  Serial.print(backLiValue1);
+  Serial.print(" | Back Li Sensor 2: ");
+  Serial.println(backLiValue2);
+
+  // Add line following logic here for the motors (if necessary)
+
+  delay(100); // Short delay to stabilize readings
+}
